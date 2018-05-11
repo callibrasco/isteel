@@ -1,0 +1,177 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<div id="checkout" data-bind="scope:'checkout'" class="checkout-container">
+    <div id="checkout-loader" data-role="checkout-loader" class="loading-mask" data-mage-init='{"checkoutLoader": {}}'>
+        <div class="loader">
+            <img src="<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>"
+                 alt="<?php /* @escapeNotVerified */ echo __('Loading...'); ?>"
+                 style="position: absolute;">
+        </div>
+    </div>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#checkout": {
+                "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+            }
+        }
+    </script>
+    <script>
+        window.checkoutConfig = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getCheckoutConfig()); ?>;
+        // Create aliases for customer.js model from customer module
+        window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+        window.customerData = window.checkoutConfig.customerData;
+    </script>
+    <script>
+        require([
+            'mage/url',
+            'Magento_Ui/js/block-loader'
+        ], function(url, blockLoader) {
+            blockLoader("<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>");
+            return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getBaseUrl();?>');
+        })
+    </script>
+</div>
+<script>
+    require(['jquery'], function ($) {
+    setTimeout(function() {delay()},500);
+        function delay(){
+            if(typeof $(".opc-block-summary") != "undefined"){
+                if(typeof $(".opc-block-summary").html() != "undefined"){
+                    if(typeof $(".opc-block-summary").find(".items-in-cart") != "undefined"){
+                        if(typeof $(".opc-block-summary").find(".items-in-cart").html() != "undefined"){
+                            if(typeof $(".opc-block-summary").find(".items-in-cart").find("div:first") != "undefined"){
+                                 $(".opc-block-summary").find(".items-in-cart").find("div:first").append("<p class='subheading'>denkt u eraan om af te rekenen bij de servicebalie</p>");
+                            }
+                        }else{
+                            setTimeout(function() {delay()},500);
+                        }
+                    }else{
+                        setTimeout(function() {delay()},500);
+                    }         
+                }else{
+                    setTimeout(function() {delay()},500);
+                }                
+            }else{
+                setTimeout(function() {delay()},500);
+            }        
+        }
+        setTimeout(function() {delay1()},500);
+        function delay1(){
+            if(typeof $("#shipping-new-address-form") != "undefined"){
+                if(typeof $("#shipping-new-address-form").html() != "undefined"){
+                    if(typeof $("#shipping-new-address-form").find("div") != "undefined"){
+                        if(typeof $("#shipping-new-address-form").find("div").html() != "undefined"){
+                            if(typeof $("#shipping-new-address-form").find("div").find("label") != "undefined"){
+                                if(typeof $("#shipping-new-address-form").find("div").find("label").find("span") != "undefined"){
+                                    if(typeof $("#shipping-new-address-form").find("div").find("div.control").find("input[type='text']").attr("id") != "undefined"){
+                                        $("#shipping-new-address-form").find("div").each(function(){
+                                            var label = $(this).find("label").find("span").html();                                        
+                                            console.log('123123123123123---'+label);
+                                            var finallabel = "";
+                                            if(label == "City"){
+                                                $(this).addClass("fullwidth_city");
+                                            }
+                                            if(label == "Company"){
+                                                $(this).hide();
+                                            }else if(label == "State/Province"){
+                                                $(this).addClass("fullwidth_land");
+                                                $(this).find("label").next("div").find("input[type='text']").attr("placeholder","Land");  
+                                            }else if(label == "Country"){
+                                                $(this).hide();
+                                            }else if(label == "Zip/Postal Code"){   
+                                                $(this).addClass("fullwidth_postcode");
+                                                $(this).find("label").next("div").find("input[type='text']").attr("placeholder","Postcode");                                                
+//                                                $("#shipping-new-address-form").find("fieldset").after('<div class="field _required" data-bind="visible: visible, attr: {\'name\': element.dataScope}, css: additionalClasses" name="shippingAddress.postcode">'+$(this).html()+'</div>');
+//                                                $(this).remove();
+                                            }else {
+                                                switch(label) {
+                                                    case "First Name":                                                    
+                                                        finallabel = "Voornaam";
+                                                        console.log("123--12313213-"+finallabel);
+                                                        break;
+                                                    case "Last Name":
+                                                        finallabel = "Achternaam";
+                                                        console.log("123--12313213-"+finallabel);
+                                                        break;
+                                                    case "Zip/Postal Code":
+                                                        finallabel = "Postcode";
+                                                        break;
+                                                    case "Phone Number":
+                                                        finallabel = "Telefoonnummer / Mobiel";
+                                                        break;   
+                                                    case "City":
+                                                        finallabel = "Woonplaats";                                                        
+                                                        break;   
+
+                                                }
+                                                
+                                                console.log("----------"+$(this).find("label").next("div").find("input[type='text']").attr("id"));
+                                                        
+                                                $(this).find("label").next("div").find("input[type='text']").attr("placeholder",finallabel);     
+                                            }
+                                                                      
+                                         });
+                                         $("#shipping-new-address-form").find("fieldset").find("div").find("div").each(function(index){
+                                             var label = $("#shipping-new-address-form").find("fieldset").find("legend").find("span").html();                               
+                                             console.log(label+"----321-----"+index);
+                                             var finallabel = "";
+                                                switch(index) {
+                                                    case 0:
+                                                        finallabel = "Straat";
+                                                        break;
+                                                    case 1:
+                                                        finallabel = "Huisnummer";
+                                                    case 2:
+                                                        finallabel = "Huisnummer";
+                                                    case 3:
+                                                        finallabel = "Huisnummer";
+                                                        break;
+                                                }
+                                             $(this).find("div.control").find("input[type='text']").attr("placeholder",finallabel);
+
+                                         }); 
+                                         $("#shipping-new-address-form").find("div").each(function(){
+                                             $(this).find("label").hide();
+                                         });
+                                         
+                                         $("#shipping-new-address-form").find("fieldset").find("legend").hide();
+                                         
+                                         var emailtxt = $("#customer-email-fieldset").find(".field").find("label").find("span").html();
+                                         console.log("emailtxt---"+emailtxt);
+                                         $("#customer-email-fieldset").find(".field").find(".control").find("input[type='email']").attr("placeholder","E-mailadres");                                         
+                                         $("#customer-email-fieldset").find("label").hide();
+                                    }else{
+                                        setTimeout(function() {delay1()},1000);
+                                    }                                    
+                                }else{
+                                    setTimeout(function() {delay1()},1000);
+                                }
+                            }else{
+                                setTimeout(function() {delay1()},500);
+                            }
+                        }else{
+                            setTimeout(function() {delay1()},500);
+                        }
+                    }else{
+                        setTimeout(function() {delay1()},500);
+                    }
+                }else{
+                    setTimeout(function() {delay1()},500);
+                }
+            }else{
+                setTimeout(function() {delay1()},500);
+            }
+        }        
+        
+    });
+    
+    
+    
+</script>

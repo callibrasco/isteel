@@ -1,0 +1,34 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="ProfilerEnableCommand" xsi:type="object">Mirasvit\Profiler\Console\Command\EnableCommand</item>
+                <item name="ProfilerDisableCommand" xsi:type="object">Mirasvit\Profiler\Console\Command\DisableCommand</item>
+                <item name="ProfilerAllowIpsCommand" xsi:type="object">Mirasvit\Profiler\Console\Command\AllowIpsCommand</item>
+                <item name="ProfilerStatusCommand" xsi:type="object">Mirasvit\Profiler\Console\Command\StatusCommand</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Mirasvit\Profiler\Block\Profile\View">
+        <arguments>
+            <argument name="tabs" xsi:type="array">
+                <item name="ioTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\IO</item>
+                <item name="codeTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\Code</item>
+                <item name="databaseTab" xsi:type="object">Mirasvit\Profiler\Block\Tab\Database</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Mirasvit\Profiler\Profile\Pool">
+        <arguments>
+            <argument name="profiles" xsi:type="array">
+                <item name="general" xsi:type="object">Mirasvit\Profiler\Profile\General</item>
+                <item name="meta" xsi:type="object">Mirasvit\Profiler\Profile\Meta</item>
+                <item name="code" xsi:type="object">Mirasvit\Profiler\Profile\Code</item>
+                <item name="database" xsi:type="object">Mirasvit\Profiler\Profile\Database</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

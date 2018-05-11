@@ -1,0 +1,69 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magento\Theme\Block\Html\Header $block
+ */
+$welcomeMessage = $block->getWelcome();
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$session = $objectManager->get('\Magento\Customer\Model\Session');
+$dealerId = $session->getDealerId();
+
+$dealersModel = $objectManager->create('MagentoCompany\Dealermail\Model\ResourceModel\Dealers\Collection');
+$dealerName = $dealersModel->addFieldToFilter('dealers_id', $dealerId)->getFirstItem()->getDealerName();
+
+//echo "<div class='dealername' style='position:absolute;'><p style='font-size:10pt; color:#000; left: 0;'>".$dealerName."</p></div>";
+
+if($dealerId > 0){
+	echo '<input type="hidden" id="dealer_id" value="'.$dealerId.'" />';
+}
+?>
+<?php switch ($block->getShowPart()):
+    case 'welcome': /* ?>
+        <li class="greet welcome" data-bind="scope: 'customer'">
+            <!-- ko if: customer().fullname  -->
+            <span data-bind="text: new String('<?php echo $block->escapeHtml(__('Welcome, %1!', '%1'));?>').replace('%1', customer().firstname)">
+            </span>
+            <!-- /ko -->
+            <!-- ko ifnot: customer().fullname  -->
+            <span data-bind="html:'<?=$block->escapeHtml($welcomeMessage) ?>'"></span>
+            <!-- /ko -->
+        </li>
+        */?>
+        <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "customer": {
+                            "component": "Magento_Customer/js/view/customer"
+                        }
+                    }
+                }
+            }
+        }
+        </script>
+        <div class="home_menu_icon">                        
+            <a class="home_icon" href="http://stores.intersteel.nl">Home</a>
+            <div class="back_forward_icon">
+                <a onclick="window.history.go(-1)" class="back_icon_arrow"></a>
+                <a onclick="window.history.go(1)" class="forward_icon_arrow"></a>
+            </div>
+        </div>
+    <?php break; ?>
+
+    <?php case 'other': ?>
+        <?php //echo $block->getChildHtml(); ?>
+    <?php break; ?>
+
+<?php endswitch; ?>
+
+<div class="loader-other-page">
+	<div class="loader-other-page-inner"></div>
+</div>
